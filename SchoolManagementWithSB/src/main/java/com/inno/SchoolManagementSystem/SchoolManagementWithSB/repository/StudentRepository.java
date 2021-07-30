@@ -11,8 +11,13 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.model.Teacher;
 
 @Repository
 public class StudentRepository {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	
+	private final JdbcTemplate jdbcTemplate;
+
+	public StudentRepository(JdbcTemplate jdbcTemplate) {
+		super();
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	public int addStudent(Student student) {
 		String query = "Insert into Students values(?,?,?,?,?,?,?,?)";

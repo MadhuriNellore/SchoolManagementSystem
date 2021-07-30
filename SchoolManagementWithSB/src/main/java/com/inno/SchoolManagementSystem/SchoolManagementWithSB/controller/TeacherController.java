@@ -11,7 +11,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +31,13 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.service.TeacherSer
 @RestController
 @RequestMapping("school/teacher")
 public class TeacherController {
-	@Autowired
-	public TeacherService teacherService;
+	
+	private final TeacherService teacherService;
+	
+	public TeacherController(TeacherService teacherService) {
+		super();
+		this.teacherService = teacherService;
+	}
 	//JPA
 		@PostMapping(path = "empAttendance", consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 		public List<EmployeeAttendance> getEmployeeAttendance()   
@@ -38,11 +45,20 @@ public class TeacherController {
 			return teacherService.getEmployeeAttendance();
 		}
 	@PostMapping(path = "login", consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-	public String login(@RequestBody EmployeeAttendance employeeAttendance) {
+	public ResponseEntity<String> login(@RequestBody EmployeeAttendance employeeAttendance) {
 		Time time = new Time(System.currentTimeMillis());
 		employeeAttendance.setLoginTime(String.valueOf(time));
+		try {
+			//int x=10/0;
 		teacherService.login(employeeAttendance);
-		return "login successful";
+		return ResponseEntity.ok("Login successful");
+		}
+		catch(RuntimeException re)
+		{
+			System.out.println(re);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(re.getMessage());
+		}
+		
 	}
 	@PostMapping(path = "logout", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String logout(@RequestBody EmployeeAttendance employeeAttendance) {
@@ -57,13 +73,9 @@ public class TeacherController {
     }
 
     @GetMapping(path = "attendance/id", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public EmployeeAttendance getAttendanceByID(@RequestParam String empId) {
-        Optional<EmployeeAttendance> employeeAttendance = teacherService.findByID(empId);
-        if (!employeeAttendance.isEmpty()) {
-            return employeeAttendance.get();
-        } else {
-            return null;
-        }
+    public Collection<EmployeeAttendance> getAttendanceByID(@RequestParam String empId) {
+      return teacherService.findByID(empId);
+        
     }
 	@PostMapping(path = "register", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String registerTeacher(@RequestBody Map<String, String> map) {

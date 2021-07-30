@@ -9,11 +9,15 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.repository.Student
 
 @Service
 public class StudentService {
+	
+	private final StudentRepository studentRepository;
+	
+	public StudentService(StudentRepository studentRepository) {
+		super();
+		this.studentRepository = studentRepository;
+	}
 
-	@Autowired
-	private StudentRepository studentRepository;
-
-	public int registerStudent(Student student) {
+		public int registerStudent(Student student) {
 		return studentRepository.addStudent(student);
 	}
 	public int updateGrade(String rollNo, int grade) {

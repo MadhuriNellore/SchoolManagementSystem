@@ -21,5 +21,5 @@ public interface EmployeeAttendanceRepository extends CrudRepository<EmployeeAtt
     Collection<EmployeeAttendance> getAttendanceByDate(String entryDate);
 
     @Query("SELECT e FROM employee_attendance e WHERE e.empId = ?1")
-    Optional<EmployeeAttendance> getByID(String empID);
+    Collection<EmployeeAttendance> getByID(String empID);
 }

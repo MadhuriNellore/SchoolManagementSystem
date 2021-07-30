@@ -17,9 +17,14 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.repository.Employe
 
 @Service
 public class AdminService {
-	@Autowired
-	private AdminRepository adminRepository;
+	
+	private final AdminRepository adminRepository;
 		
+	public AdminService(AdminRepository adminRepository) {
+		super();
+		this.adminRepository = adminRepository;
+	}
+
 	//jdbcTemplate
 	public List<Map<String, Object>> viewStudents()
 	{

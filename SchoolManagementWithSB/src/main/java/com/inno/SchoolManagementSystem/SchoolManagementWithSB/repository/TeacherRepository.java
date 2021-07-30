@@ -11,8 +11,13 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.model.Teacher;
 
 @Repository
 public class TeacherRepository {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	
+	private final JdbcTemplate jdbcTemplate;
+
+	public TeacherRepository(JdbcTemplate jdbcTemplate) {
+		super();
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	public int addTeacher(Teacher teacher) {
 

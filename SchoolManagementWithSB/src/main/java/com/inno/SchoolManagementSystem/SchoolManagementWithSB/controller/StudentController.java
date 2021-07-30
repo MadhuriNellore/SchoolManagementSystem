@@ -18,8 +18,13 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.service.StudentSer
 @RestController
 @RequestMapping("school/student")
 public class StudentController {
-	@Autowired
+	
 	public StudentService studentService;
+	
+	public StudentController(StudentService studentService) {
+		super();
+		this.studentService = studentService;
+	}
 	@PostMapping(path = "register", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String register(@RequestBody Map<String, String> map)
 	{

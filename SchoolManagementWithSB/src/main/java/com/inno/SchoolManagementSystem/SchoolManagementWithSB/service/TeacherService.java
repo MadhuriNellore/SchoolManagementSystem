@@ -23,10 +23,15 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.repository.Teacher
 
 @Service
 public class TeacherService {
-	@Autowired
-	public TeacherRepository teacherRepository;
-	@Autowired
-	public EmployeeAttendanceRepository employeeAttendanceRepository;
+	private final TeacherRepository teacherRepository;
+	private final EmployeeAttendanceRepository employeeAttendanceRepository;
+
+	public TeacherService(TeacherRepository teacherRepository,
+			EmployeeAttendanceRepository employeeAttendanceRepository) {
+		super();
+		this.teacherRepository = teacherRepository;
+		this.employeeAttendanceRepository = employeeAttendanceRepository;
+	}
 
 	// JPA
 	public List<EmployeeAttendance> getEmployeeAttendance() {
@@ -39,13 +44,14 @@ public class TeacherService {
 	        return employeeAttendanceRepository.getAttendanceByDate(entryDate);
 	    }
 //attendance by id
-	    public Optional<EmployeeAttendance> findByID(String empID) {
+	    public Collection<EmployeeAttendance> findByID(String empID) {
 	        return employeeAttendanceRepository.getByID(empID);
 	    }
 
 	// JPA
 	// save the login details
-	 public void login(EmployeeAttendance employeeAttendance) {
+	 public void login(EmployeeAttendance employeeAttendance) throws RuntimeException
+	 {
 	        System.out.println("EmployeeID: " + employeeAttendance.getEmpId() + "\nLogin Time: " + employeeAttendance.getLoginTime());
 	        employeeAttendanceRepository.save(employeeAttendance);
 	    }

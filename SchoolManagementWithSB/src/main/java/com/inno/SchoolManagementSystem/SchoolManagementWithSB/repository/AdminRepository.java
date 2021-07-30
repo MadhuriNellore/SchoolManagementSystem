@@ -8,8 +8,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 @Repository
 public class AdminRepository {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	
+	private final JdbcTemplate jdbcTemplate;
+	
+	public AdminRepository(JdbcTemplate jdbcTemplate) {
+		super();
+		this.jdbcTemplate = jdbcTemplate;
+	}
 	public List<Map<String, Object>> getStudentRecords()
 	{
 		List<Map<String, Object>> details= jdbcTemplate.queryForList("select * from students");

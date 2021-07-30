@@ -18,10 +18,14 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.service.AdminServi
 @RestController
 @RequestMapping("school/admin")
 public class AdminController {
-	@Autowired
-	private AdminService adminService;
+	
+	private final AdminService adminService;
 	
 	
+	public AdminController(AdminService adminService) {
+		super();
+		this.adminService = adminService;
+	}
 	//jdbc Template
 	@PostMapping(path = "studentDetails", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Map<String, Object>> getStudents()
