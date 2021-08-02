@@ -45,4 +45,24 @@ public class StudentRepository {
 		int insert = jdbcTemplate.update(query, section, rollNo);
 		return insert;
 	}
+	public int updateName(String rollNo, String name) {
+		String query = "Update Students set name = ? where rollNo = ?";
+		int insert = jdbcTemplate.update(query, name, rollNo);
+		return insert;
+	}
+	public int updateAge(String rollNo, int age) {
+		String query = "Update Students set age = ? where rollNo = ?";
+		int insert = jdbcTemplate.update(query, age, rollNo);
+		return insert;
+	}
+	public int updateAddress(String rollNo, String address) {
+		String query = "Update Students set address = ? where rollNo = ?";
+		int insert = jdbcTemplate.update(query, address, rollNo);
+		return insert;
+	}
+	public int updateContactNo(String rollNo, String contactNo) {
+		String query = "Update Students set contactNo = ? where rollNo = ?";
+		int insert = jdbcTemplate.update(query, contactNo, rollNo);
+		return insert;
+	}
 }

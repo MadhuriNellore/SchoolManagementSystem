@@ -2,7 +2,12 @@ package com.inno.SchoolManagementSystem.SchoolManagementWithSB.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 public class Employee  extends Person{
+
 	private long empID;
     private String department;
     private long salary;

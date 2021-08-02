@@ -1,4 +1,5 @@
 package com.inno.SchoolManagementSystem.SchoolManagementWithSB.model;
+
 public class Person {
 	 private String name;
 	    private int age;

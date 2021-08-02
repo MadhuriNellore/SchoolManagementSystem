@@ -31,54 +31,38 @@ import com.inno.SchoolManagementSystem.SchoolManagementWithSB.service.TeacherSer
 @RestController
 @RequestMapping("school/teacher")
 public class TeacherController {
-	
+
 	private final TeacherService teacherService;
-	
+
 	public TeacherController(TeacherService teacherService) {
 		super();
 		this.teacherService = teacherService;
 	}
-	//JPA
-		@PostMapping(path = "empAttendance", consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-		public List<EmployeeAttendance> getEmployeeAttendance()   
-		{  
-			return teacherService.getEmployeeAttendance();
-		}
+
 	@PostMapping(path = "login", consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> login(@RequestBody EmployeeAttendance employeeAttendance) {
 		Time time = new Time(System.currentTimeMillis());
 		employeeAttendance.setLoginTime(String.valueOf(time));
 		try {
-			//int x=10/0;
-		teacherService.login(employeeAttendance);
-		return ResponseEntity.ok("Login successful");
-		}
-		catch(RuntimeException re)
-		{
+			// int x=10/0;
+			teacherService.login(employeeAttendance);
+			return ResponseEntity.ok("Login successful");
+		} catch (RuntimeException re) {
 			System.out.println(re);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(re.getMessage());
 		}
-		
 	}
+
 	@PostMapping(path = "logout", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String logout(@RequestBody EmployeeAttendance employeeAttendance) {
+	public ResponseEntity<String> logout(@RequestBody EmployeeAttendance employeeAttendance) {
 		Time time = new Time(System.currentTimeMillis());
 		employeeAttendance.setLogoutTime(String.valueOf(time));
 		teacherService.logout(employeeAttendance);
-		return "logout successful";
+		return ResponseEntity.ok("logout successful");
 	}
-	@GetMapping(path = "attendance", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<EmployeeAttendance> getAttendanceByDate(@RequestParam String entryDate) {
-        return teacherService.getAttendanceByDate(entryDate);
-    }
 
-    @GetMapping(path = "attendance/id", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<EmployeeAttendance> getAttendanceByID(@RequestParam String empId) {
-      return teacherService.findByID(empId);
-        
-    }
 	@PostMapping(path = "register", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String registerTeacher(@RequestBody Map<String, String> map) {
+	public ResponseEntity<String> registerTeacher(@RequestBody Map<String, String> map) {
 		Teacher teacher = new Teacher();
 		teacher.setEmpID(Long.parseLong(map.get("empId")));
 		teacher.setDepartment(map.get("department"));
@@ -89,7 +73,6 @@ public class TeacherController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
 		teacher.setDesignation(map.get("designation"));
 		teacher.setSpecialization(map.get("specialization"));
 		teacher.setName(map.get("name"));
@@ -98,39 +81,69 @@ public class TeacherController {
 		teacher.setContactNo(map.get("contactNo"));
 		teacher.setAddress(map.get("address"));
 		if (teacherService.registerTeacher(teacher) == 1)
-			return "Teacher Registered Successfully ";
+			return ResponseEntity.ok("Teacher Registered Successfully ");
 		else
-			return "Something went Wrong";
+			return ResponseEntity.ok("Something went Wrong");
 	}
 
-	
-	
 	@PostMapping(path = "delete", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String deleteTeacher(@RequestBody Map<String, String> map)
-	{
-		Teacher teacher= new Teacher();
+	public ResponseEntity<String> deleteTeacher(@RequestBody Map<String, String> map) {
+		Teacher teacher = new Teacher();
 		teacher.setEmpID(Long.parseLong(map.get("empId")));
-		if(teacherService.deleteTeacher(teacher)==1)
-			return "Deleted successfully"; 
+		if (teacherService.deleteTeacher(teacher) == 1)
+			return ResponseEntity.ok("Deleted successfully");
 		else
-			return "Something Went Wrong";
+			return ResponseEntity.ok("Something Went Wrong");
 	}
-		@PostMapping(path = "updateSalary", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String updateSalary(@RequestBody Map<String, String> map) {
-		if(teacherService.updateSalary(Long.parseLong(map.get("empId")), Long.parseLong(map.get("salary")))==1)
-		return "updated Salary Successfully";
+
+	@PostMapping(path = "updateSalary", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateSalary(@RequestBody Map<String, String> map) {
+		if (teacherService.updateSalary(Long.parseLong(map.get("empId")), Long.parseLong(map.get("salary"))) == 1)
+			return ResponseEntity.ok("updated Salary Successfully");
 		else
-			return "Something went wrong";
+			return ResponseEntity.ok("Something went wrong");
 	}
 
 	@PostMapping(path = "updateSpecialization", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String updateSpecialization(@RequestBody Map<String, String> map)
-	{
-		if(teacherService.updateSpecialization(Long.parseLong(map.get("empId")), map.get("specialization"))==1)
-			return "Updated specialization Successfully ";
+	public ResponseEntity<String> updateSpecialization(@RequestBody Map<String, String> map) {
+		if (teacherService.updateSpecialization(Long.parseLong(map.get("empId")), map.get("specialization")) == 1)
+			return ResponseEntity.ok("Updated specialization Successfully ");
 		else
-			return "Something went Wrong";
+			return ResponseEntity.ok("Something went Wrong");
 	}
+	@PostMapping(path = "updateName", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateName(@RequestBody Map<String, String> map)
+	{
+		if(teacherService.updateName(Long.parseLong(map.get("empId")), map.get("name"))==1)
+			return ResponseEntity.ok("Updated name Successfully ");
+		else
+			return ResponseEntity.ok("Something Went Wrong");
+	}
+	@PostMapping(path = "updateAge", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateAge(@RequestBody Map<String, String> map)
+	{
+		if(teacherService.updateAge(Long.parseLong(map.get("empId")), Integer.parseInt(map.get("age")))==1)
+			return ResponseEntity.ok("Updated Age Successfully ");
+		else
+			return ResponseEntity.ok("Something Went Wrong");
+	}
+	@PostMapping(path = "updateAddress", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateAddress(@RequestBody Map<String, String> map)
+	{
+		if(teacherService.updateAddress(Long.parseLong(map.get("empId")), map.get("address"))==1)
+			return ResponseEntity.ok("Updated Address Successfully ");
+		else
+			return ResponseEntity.ok("Something Went Wrong");
+	}
+	@PostMapping(path = "updateContactNo", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateContactNo(@RequestBody Map<String, String> map)
+	{
+		if(teacherService.updateContactNo(Long.parseLong(map.get("empId")), map.get("contactNo"))==1)
+			return ResponseEntity.ok("Updated contactNo Successfully ");
+		else
+			return ResponseEntity.ok("Something Went Wrong");
+	}
+
 	@GetMapping(path = "teacher")
 	public Map<String, String> getTeacherInfo(@RequestParam String empId) {
 		System.out.println("GET endpoint");
@@ -154,6 +167,5 @@ public class TeacherController {
 		System.out.println("DELETE endpoint");
 		return new HashMap<>();
 	}
-
 
 }

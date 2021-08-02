@@ -1,14 +1,18 @@
 package com.inno.SchoolManagementSystem.SchoolManagementWithSB.model;
 
+import javax.persistence.Entity;
+
+
 public class Staff extends Employee
 {
-private String Worktype;
+
+private String WorkType;
 
 public String getWorktype() {
-	return Worktype;
+	return WorkType;
 }
 
-public void setWorktype(String worktype) {
-	Worktype = worktype;
+public void setWorktype(String workType) {
+	this.WorkType = workType;
 }
 }

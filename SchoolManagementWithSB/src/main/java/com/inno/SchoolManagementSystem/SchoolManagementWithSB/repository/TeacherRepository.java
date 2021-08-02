@@ -48,4 +48,24 @@ public class TeacherRepository {
 		int insert = jdbcTemplate.update(query, teacher.getEmpID());
 		return insert;
 	}
+	public int updateName(long empId, String name) {
+		String query = "Update Teachers set name = ? where empId = ?";
+		int insert = jdbcTemplate.update(query, name, empId);
+		return insert;
+	}
+	public int updateAge(long empId, int age) {
+		String query = "Update Teachers set age = ? where empId = ?";
+		int insert = jdbcTemplate.update(query, age, empId);
+		return insert;
+	}
+	public int updateAddress(long empId, String address) {
+		String query = "Update Teachers set address = ? where empId = ?";
+		int insert = jdbcTemplate.update(query, address, empId);
+		return insert;
+	}
+	public int updateContactNo(long empId, String contactNo) {
+		String query = "Update Teachers set contactNo = ? where empId = ?";
+		int insert = jdbcTemplate.update(query, contactNo, empId);
+		return insert;
+	}
 }

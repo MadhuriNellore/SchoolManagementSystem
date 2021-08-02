@@ -35,4 +35,24 @@ public class StudentService {
 		student.setSection(section);
 		return studentRepository.updateSection(rollNo, section);
 	}
+	public int updateName(String rollNo, String name) {
+		Student student = new Student();
+		student.setName(name);
+		return studentRepository.updateName(rollNo, name);
+	}
+	public int updateAge(String rollNo, int age)  {
+		Student student = new Student();
+		student.setAge(age);
+		return studentRepository.updateAge(rollNo, age);
+	}
+	public int updateAddress(String rollNo, String address)  {
+		Student student = new Student();
+		student.setAddress(address);
+		return studentRepository.updateAddress(rollNo, address);
+	}
+	public int updateContactNo(String rollNo, String contactNo) {
+		Student student = new Student();
+		student.setContactNo(contactNo);
+		return studentRepository.updateContactNo(rollNo, contactNo);
+	}
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.inno.SchoolManagementSystem.SchoolManagementWithSB.model.EmployeeAttendance;
 @Repository
-public interface EmployeeAttendanceRepository extends CrudRepository<EmployeeAttendance, String> {
+public interface EmployeeAttendanceRepository extends CrudRepository<EmployeeAttendance, Long> {
 
 	@Query("UPDATE employee_attendance set logout_time=?1 where emp_id=?2 and entry_date=?3")
 	@Transactional
